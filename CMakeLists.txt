@@ -20,44 +20,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-# Prerequisites
-*.d
+cmake_minimum_required(VERSION 3.6)
+project(zeromq_ssl)
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+set(CMAKE_CXX_STANDARD 17)
 
-# Precompiled Headers
-*.gch
-*.pch
+include(FindOpenSSL)
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-
-# CLion files
-.idea
-
-# Build directories
-*build*
-
-# Ignore vagrant directories
-.vagrant
+find_package(cppzmq REQUIRED)
+find_package(Flatbuffers REQUIRED)

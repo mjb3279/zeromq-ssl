@@ -1,3 +1,6 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
 # MIT License
 #
 # Copyright (c) 2020 Michael J Boquard
@@ -20,44 +23,21 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-# Prerequisites
-*.d
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/bionic64"
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+  # Sync source directory
+  config.vm.synced_folder "../../", "/build"
+  
+  # Change SSH port to something else
+  config.vm.network :forwarded_port, guest:22, host: 3222, id: 'ssh'
 
-# Precompiled Headers
-*.gch
-*.pch
+  config.vm.provider "virtualbox" do |v|
+    v.gui = false
+    v.memory = 2048
+    v.cpus = 2
+    v.customize [ "modifyvm", :id, "--uartmode1", "disconnected" ]
+  end
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-
-# CLion files
-.idea
-
-# Build directories
-*build*
-
-# Ignore vagrant directories
-.vagrant
+  config.vm.provision "shell", path: "provision.sh"
+end
